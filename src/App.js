@@ -21,13 +21,15 @@ const App = () => {
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
 
-  const yValue = (d) => d.Country;
-  const xValue = (d) => d.Population;
+  const yAccessor = (d) => d.Country;
+  const xAccessor = (d) => d.Population;
 
-  const yScale = scaleBand().domain(data.map(yValue)).range([0, innerHeight]);
+  const yScale = scaleBand()
+    .domain(data.map(yAccessor))
+    .range([0, innerHeight]);
 
   const xScale = scaleLinear()
-    .domain([0, max(data, xValue)])
+    .domain([0, max(data, xAccessor)])
     .range([0, innerWidth]);
 
   return (
@@ -39,8 +41,8 @@ const App = () => {
           data={data}
           xScale={xScale}
           yScale={yScale}
-          xValue={xValue}
-          yValue={yValue}
+          xAccessor={xAccessor}
+          yAccessor={yAccessor}
         />
       </g>
     </svg>

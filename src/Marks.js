@@ -1,10 +1,10 @@
-export const Marks = ({ data, xScale, yScale, xValue, yValue }) =>
+export const Marks = ({ data, xScale, yScale, xAccessor, yAccessor }) =>
   data.map((d) => (
     <rect
-      key={yValue(d)}
+      key={yAccessor(d)}
       x={0}
-      y={yScale(yValue(d))}
-      width={xScale(xValue(d))}
+      y={yScale(yAccessor(d))}
+      width={xScale(xAccessor(d))}
       height={yScale.bandwidth()}
     />
   ));
