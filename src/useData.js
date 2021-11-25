@@ -1,22 +1,21 @@
 import { useState, useEffect } from "react";
 import { csv } from "d3";
 
-const csvUrl =
-  "https://gist.githubusercontent.com/curran/0ac4077c7fc6390f5dd33bf5c06cb5ff/raw/605c54080c7a93a417a3cea93fd52e7550e76500/UN_Population_2019.csv";
+const csvUrl = `https://gist.githubusercontent.com/curran/a08a1080b88344b0c8a7/raw/639388c2cbc2120a14dcf466e85730eb8be498bb/iris.csv`;
 
-//custom hook
 export const useData = () => {
   const [data, setData] = useState(null);
 
   useEffect(() => {
     const row = (d) => {
-      d.Population = +d["2020"];
+      d.sepal_length = +d.sepal_length;
+      d.sepal_width = +d.sepal_width;
+      d.petal_length = +d.petal_length;
+      d.petal_width = +d.petal_width;
       return d;
     };
-    csv(csvUrl, row).then((data) => {
-      setData(data.slice(0, 10));
-    });
+    csv(csvUrl, row).then(setData);
   }, []);
-
+  //console.log(data);
   return data;
 };
