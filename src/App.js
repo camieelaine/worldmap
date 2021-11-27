@@ -1,6 +1,14 @@
 import React, { useState, useCallback, useEffect } from "react";
 import ReactDOM from "react-dom";
-import { csv, scaleLinear, max, format, extent } from "d3";
+import {
+  csv,
+  scaleLinear,
+  scaleTime,
+  max,
+  format,
+  timeFormat,
+  extent,
+} from "d3";
 import { useData } from "./useData";
 import { AxisBottom } from "./AxisBottom";
 import { AxisLeft } from "./AxisLeft";
@@ -15,7 +23,7 @@ const margin = { top: 20, right: 30, bottom: 65, left: 90 };
 const xAxisLabelOffset = 50;
 const yAxisLabelOffset = 45;
 
-const attributes = [
+/* const attributes = [
   { value: "sepal_length", label: "Sepal Length" },
   { value: "sepal_width", label: "Sepal Width" },
   { value: "petal_length", label: "Petal Length" },
@@ -29,20 +37,20 @@ const getLabel = (value) => {
       return attributes[i].label;
     }
   }
-};
+}; */
 
 const App = () => {
   const data = useData();
 
-  const initialXAttribute = "petal_length";
-  const [xAttribute, setXAttribute] = useState(initialXAttribute);
-  const xAccessor = (d) => d[xAttribute];
-  const xAxisLabel = getLabel(xAttribute);
+  //const initialXAttribute = "date";
+  //const [xAttribute, setXAttribute] = useState(initialXAttribute);
+  const xAccessor = (d) => d.date;
+  const xAxisLabel = "Time";
 
-  const initialYAttribute = "sepal_width";
-  const [yAttribute, setYAttribute] = useState(initialYAttribute);
-  const yAccessor = (d) => d[yAttribute];
-  const yAxisLabel = getLabel(yAttribute);
+  //const initialYAttribute = "mlytavgnormal";
+  //const [yAttribute, setYAttribute] = useState(initialYAttribute);
+  const yAccessor = (d) => d.mlytavgnormal;
+  const yAxisLabel = "Temperature";
 
   if (!data) {
     return <pre>Loading...</pre>;
@@ -50,41 +58,28 @@ const App = () => {
 
   const innerHeight = height - margin.top - margin.bottom;
   const innerWidth = width - margin.left - margin.right;
-  const siFormat = format(".2s");
-  const xAxisTickFormat = (tickValue) => siFormat(tickValue).replace("G", "B");
+  const xAxisTickFormat = timeFormat("%b");
+  //const xAxisTickFormat = timeFormat("%a");
 
-  const xScale = scaleLinear()
+  const xScale = scaleTime()
     .domain(extent(data, xAccessor))
     .range([0, innerWidth])
     .nice();
 
   const yScale = scaleLinear()
     .domain(extent(data, yAccessor))
-    .range([0, innerHeight]);
+    .range([innerHeight, 0])
+    .nice();
 
   return (
     <>
-      <label for="x-select">X:</label>
-      <Dropdown
-        options={attributes}
-        id="x-select"
-        selectedValue={xAttribute}
-        onSelectedValueChange={setXAttribute}
-      />
-      <label for="y-select">Y:</label>
-      <Dropdown
-        options={attributes}
-        id="y-select"
-        selectedValue={yAttribute}
-        onSelectedValueChange={setYAttribute}
-      />
       <svg width={width} height={height}>
         <g transform={`translate(${margin.left},${margin.top})`}>
           <AxisBottom
             xScale={xScale}
             innerHeight={innerHeight}
             tickFormat={xAxisTickFormat}
-            tickOffset={5}
+            tickOffset={7}
           />
           <text
             className="axis-label"
@@ -95,7 +90,7 @@ const App = () => {
           >
             {yAxisLabel}
           </text>
-          <AxisLeft yScale={yScale} innerWidth={innerWidth} tickOffset={5} />
+          <AxisLeft yScale={yScale} innerWidth={innerWidth} tickOffset={7} />
           <text
             className="axis-label"
             x={innerWidth / 2}

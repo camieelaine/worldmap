@@ -1,3 +1,3 @@
 ## Weather over time
 
-A scatter plot of [The Iris Dataset](https://gist.github.com/curran/a08a1080b88344b0c8a7).
+A line chart of [The MatSu Experimental Farm weather station](https://gist.github.com/camieelaine/c05b42a256bc2392e9cc2b14762845e8).
