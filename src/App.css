@@ -6,74 +6,17 @@ body {
 pre {
   font-size: 7em;
 }
-.tick line {
-  stroke: #c0c0bb;
-}
-.tick text {
-  fill: #635f5d;
-}
-.mark {
+.marks .land {
   fill: #137b80;
 }
-.axis-label {
-  font-size: 2.5em;
-  fill: #635f5d;
+.marks .sphere {
+  fill: #ececec;
 }
-label,
-select {
-  font-size: 3em;
+.marks .interiors {
+  fill: none;
+  stroke: #43a4a8;
 }
-select option {
-  font-size: 1rem;
-}
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
-.marks circle {
-  fill: #137b80;
-}
-.marks path {
-  stroke: #137b80;
-  stroke-width: 4;
-  stroke-linejoin: round;
-  stroke-linecap: round;
-}
-.axis-label {
-  font-size: 2.5em;
-  fill: #635f5d;
+.marks .graticules {
+  fill: none;
+  stroke: #dadada;
 }

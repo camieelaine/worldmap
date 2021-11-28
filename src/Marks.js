@@ -1,30 +1,16 @@
-import { line, curveNatural } from "d3";
-export const Marks = ({
-  data,
-  xScale,
-  yScale,
-  xAccessor,
-  yAccessor,
-  tooltipFormat,
-  circleRadius,
-}) => (
+import { geoNaturalEarth1, geoPath, geoGraticule } from "d3";
+
+const projection = geoNaturalEarth1();
+const path = geoPath(projection);
+const graticule = geoGraticule();
+
+export const Marks = ({ data: { land, interiors } }) => (
   <g className="marks">
-    <path
-      fill="none"
-      stroke="black"
-      d={line()
-        .x((d) => xScale(xAccessor(d)))
-        .y((d) => yScale(yAccessor(d)))
-        .curve(curveNatural)(data)}
-    />
-    {data.map((d) => (
-      <circle
-        cx={xScale(xAccessor(d))}
-        cy={yScale(yAccessor(d))}
-        r={circleRadius}
-      >
-        <title>{tooltipFormat(xAccessor(d))}</title>
-      </circle>
+    <path className="sphere" d={path({ type: "Sphere" })} />
+    <path className="graticules" d={path(graticule())} />
+    {land.features.map((feature) => (
+      <path className="land" d={path(feature)} />
     ))}
+    <path className="interiors" d={path(interiors)} />
   </g>
 );
